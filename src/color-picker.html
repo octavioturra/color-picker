@@ -1,0 +1,45 @@
+<!-- Import Polymer -->
+<script src="../bower_components/polymer/polymer.js"></script>
+
+<!-- Define your custom element -->
+<polymer-element name="color-selector" attributes="color showHex showRgb dialog">
+	<template>
+		<paper-canvas width="200" height="200" id="canvas"></paper-canvas>
+		<style></style>
+	</template>
+	<script>
+		Polymer('color-selector', {
+			/* -- Attributes ------------------------------------------------ */
+			color: '#FFF',
+			showHex: true,
+			showRgb: false,
+			dialog: true,
+			/* -- Lifecycle ------------------------------------------------- */
+			ready: function () {
+				var p = this.$.canvas.paper;
+				var from = new p.Point(100, 20);
+				var to = new p.Point(103, 100);
+				var path = new p.Path.Rectangle(from, to);
+				path.fillColor = 'red';
+				path.fillColor.hue = 0;
+				for (var x = 1; x < 360; x += 1) {
+					var c = path.clone()
+					path.fillColor.hue += 1;
+					c.rotate(x, new p.Point(102, 100));
+				}
+				var circle = new p.Path.Circle(new p.Point(102, 101), 82);
+				circle.fillColor = {
+					gradient: {
+						stops: [['rgba(255,255,255,1)', .1],
+										['rgba(255,255,255,0)', 0.5],
+										['rgba(0,0,0,1)', 1]],
+						radial: true
+					},
+					origin: circle.position,
+					destination: circle.bounds.rightCenter
+				}
+			}
+			/* -- Methods --------------------------------------------------- */
+		});
+	</script>
+</polymer-element>

@@ -1,0 +1,28 @@
+{
+  "name": "color-picker",
+  "version": "0.5,.0",
+  "description": "Color picker component based on paper-canvas",
+  "authors": [
+    "Octavio Turra <octavio.turra@gmail.com>"
+  ],
+  "license": "MIT",
+  "main": "dist/color-picker.html",
+  "keywords": [
+    "polymer",
+    "canvas",
+    "paper-js",
+    "drawing",
+    "paper-canvas",
+    "web-components"
+  ],
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components"
+  ],
+  "dependencies": {
+    "polymer": "Polymer/polymer#~0.3.1",
+    "paper": "~0.9.18",
+    "paper-canvas": "*"
+  }
+}
