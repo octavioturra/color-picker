@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 # &lt;color-picker&gt;
 
 Color picker component based on [paper-canvas](http://octavioturra.github.io/paper-canvas).
@@ -106,3 +107,9 @@ For detailed changelog, check [Releases](https://github.com/octavioturra/paper-c
 
 [MIT License](http://octavioturra.mit-license.org/) © Octavio Turra.
 Documentation style and package structure based in [voice-elements](http://zenorocha.github.com/voice-elements) from [Zeno Rocha](http://twitter.com/zenorocha).
+=======
+color-picker
+============
+
+Color picker component based on paper-canvas
+>>>>>>> origin/master
