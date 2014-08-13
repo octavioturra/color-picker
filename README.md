@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 # &lt;color-picker&gt;
 
 Color picker component based on [paper-canvas](http://octavioturra.github.io/paper-canvas).
@@ -111,5 +110,4 @@ Documentation style and package structure based in [voice-elements](http://zenor
 color-picker
 ============
 
-Color picker component based on paper-canvas
->>>>>>> origin/master
+Color picker component based on paper-canvas.

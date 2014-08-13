@@ -1,46 +1,67 @@
 <!-- Import Polymer -->
-<script src="../bower_components/polymer/polymer.js"></script>
+<link rel="import" href="../bower_components/polymer/polymer.html">
 <link rel="import" href="../bower_components/paper-canvas/dist/paper-canvas.html">
 
 <!-- Define your custom element -->
-<polymer-element name="color-selector" attributes="color showHex showRgb dialog">
+<polymer-element name="color-picker" attributes="color showHex showRgb saturation dialog ">
+
 	<template>
-		<paper-canvas width="200" height="200" id="canvas"></paper-canvas>
-		<style></style>
+		<paper-canvas width="200px" height="200px" id="canvas" background="rgba(0,0,0,0.1)"></paper-canvas>
+		<label for="black">Black:</label>
+		<input type="range" name="black" id="black" min="0" max="1" step="0.1" value="{{black}}">
+		<style>
+			:host{
+				background: red;
+				display: block;
+				height: 400px;
+				width: 400px;
+				position: relative;
+			}
+		</style>
 	</template>
 	<script>
-		Polymer('color-selector', {
+		Polymer('color-picker', {
 			/* -- Attributes ------------------------------------------------ */
 			color: '#FFF',
 			showHex: true,
 			showRgb: false,
+			black: 0.5,
 			dialog: true,
+			paper: null,
+			/* -- Observables------------------------------------------------ */
+			observe: {
+				black: 'renderBlack'
+			},
 			/* -- Lifecycle ------------------------------------------------- */
 			ready: function () {
-				var p = this.$.canvas.paper;
-				var from = new p.Point(100, 20);
-				var to = new p.Point(103, 100);
-				var path = new p.Path.Rectangle(from, to);
-				path.fillColor = 'red';
-				path.fillColor.hue = 0;
-				for (var x = 1; x < 360; x += 1) {
-					var c = path.clone()
-					path.fillColor.hue += 1;
-					c.rotate(x, new p.Point(102, 100));
-				}
-				var circle = new p.Path.Circle(new p.Point(102, 101), 82);
-				circle.fillColor = {
-					gradient: {
-						stops: [['rgba(255,255,255,1)', .1],
-										['rgba(255,255,255,0)', 0.5],
-										['rgba(0,0,0,1)', 1]],
-						radial: true
-					},
-					origin: circle.position,
-					destination: circle.bounds.rightCenter
-				}
-			}
+				var self = this;
+				this.paper = this.$.canvas.paper;
+
+				this.$.canvas.addEventListener('redraw', function(){
+					var p = this.paper;
+					var from = new p.Point(100, 20);
+					var to = new p.Point(103, 100);
+					var path = new p.Path.Rectangle(from, to);
+					path.fillColor = 'red';
+					path.fillColor.hue = 0;
+					for (var x = 1; x < 360; x += 1) {
+						var c = path.clone()
+						path.fillColor.hue += 1;
+						c.rotate(x, new p.Point(102, 100));
+					}
+					var center = new this.paper.Point(102, 100);
+					self.blackCircle = new this.paper.Path.Circle(center, 80);
+					self.blackCircle.fillColor = 'black'
+					self.blackCircle.opacity = self.black;
+
+					this.draw();
+				});
+			},
 			/* -- Methods --------------------------------------------------- */
+			renderBlack: function(){
+				this.blackCircle.opacity = this.black;
+				this.$.canvas.draw();
+			}
 		});
 	</script>
 </polymer-element>
