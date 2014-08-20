@@ -1,0 +1,73 @@
+:host {
+	display: inline-block;
+}
+:host(.shadow) label {
+	box-shadow: 1px 1px 1px #666;
+}
+:host(.square.shadow) label {
+	box-shadow: 1px 1px 0 #666;
+}
+:host(.square) label {
+	border-radius: 0;
+}
+:host(.square) #lp {
+	margin-top: -5px;
+}
+:host(.square) #ls {
+	margin-top: 5px;
+}
+:host(.horizontal) #label {
+	display: inline-block;
+}
+:host(.horizontal,
+.vertical) #label:after {
+	content: ":";
+	margin-left: 5px;
+}
+:host(.vertical) #label {
+	display: block;
+	clear: both;
+}
+:host>div {
+	width: 35px;
+	height: 22px;
+	position: relative;
+}
+#colorPickerGroup {
+	position: relative;
+	display: inline-block;
+}
+label {
+	position: absolute;
+	display: block;
+	width: 20px;
+	height: 20px;
+	border-radius: 100%;
+	border: 1px solid rgba(0, 0, 0, 0.2);
+	float: left;
+	top: 0;
+	transition: opacity 200ms linear;
+	cursor: pointer;
+}
+label:hover {
+	opacity: .7;
+}
+#lp {
+	left: 0;
+}
+#ls {
+	right: 0;
+}
+.primary {
+	z-index: 1;
+}
+.secundary {
+	z-index: 0;
+}
+[type=color] {
+	visibility: hidden;
+	width: 0;
+	height: 0;
+	border: 0;
+	padding: 0;
+}

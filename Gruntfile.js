@@ -28,13 +28,20 @@ module.exports = function(grunt) {
                     to: '..'
                 }]
             }
-        }
+        },
+				'karma': {
+					unit: {
+						configFile: 'test/karma.conf.js'
+					}
+				}
     });
 
     grunt.loadNpmTasks('grunt-contrib-connect');
     grunt.loadNpmTasks('grunt-gh-pages');
     grunt.loadNpmTasks('grunt-text-replace');
+		grunt.loadNpmTasks('grunt-karma');
 
+		grunt.registerTask('test', ['karma'])
     grunt.registerTask('build',  ['replace']);
     grunt.registerTask('deploy', ['gh-pages']);
     grunt.registerTask('server', ['connect']);

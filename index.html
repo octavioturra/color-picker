@@ -148,7 +148,7 @@ window.addEventListener('polymer-ready', function(e) {
 
                 <!-- Demo #3 -->
 
-                <p>We have 3 label style behaviors:</p>
+                <p>It has 3 label style behaviors:</p>
 
                 <div class="example">
                     <color-picker label="None"></color-picker>
@@ -160,37 +160,27 @@ window.addEventListener('polymer-ready', function(e) {
                     <color-picker label="Vertical" class="vertical"></color-picker>
                 </div>
 
-                <!-- Demo #2 -->
-<!--
-                <p>In the following demo, we draw a simple circle into the canvas with <a href="http://http://paperjs.org/">Paper.js</a> API.</p>
+                <!-- Demo #4 -->
+
+                <p>It has 3 label style behaviors:</p>
 
                 <div class="example">
-										<paper-canvas class="shadow" width="300px" height="300px" id="circleCanvas"></paper-canvas>
-										<script>
-											window.addEventListener('polymer-ready', function(e) {
-													var paperCanvas = document.querySelector('#circleCanvas');
-													paperCanvas.addEventListener('redraw', function(){
-														var circle = this.paper.Path.Circle(new this.paper.Point(150, 150), 100);
-														circle.fillColor = 'green';
-														this.draw();
-													});
-											});
-										</script>
+                    <color-picker label="None"></color-picker>
+                    <br>
+                    <br>
+                    <color-picker label="Horizontal" class="horizontal"></color-picker>
+                    <br>
+                    <br>
+                    <color-picker label="Vertical" class="vertical"></color-picker>
                 </div>
 
-                <pre><code>&lt;paper-canvas class="shadow" width="300px" height="300px" id="circleCanvas">&lt;/voice-player&gt;
-&lt;script&gt;
-window.addEventListener('polymer-ready', function(e) {
-		var paperCanvas = document.querySelector('#circleCanvas');
-		paperCanvas.addEventListener('redraw', function(){
-			var center = new this.paper.Point(150, 150);
-			var circle = this.paper.Path.Circle(center, 100);
-			circle.fillColor = 'green';
-			this.draw();
-		});
-});
-&lt;/script&gt;</code></pre>
--->
+                <!-- Demo #4 -->
+
+                <p>Accepts HEX, RGB, HSL and names for color initial input:</p>
+
+                <div class="example">
+                    <color-picker label="None" primary="red" secundary="HSL(20%, 10%, 30%)"></color-picker>
+                </div>
 
 
                 <!-- Options -->
