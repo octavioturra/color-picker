@@ -6,27 +6,51 @@
 <polymer-element name="color-picker" attributes="label color primary secundary">
 
 	<template>
+		<span id="label">{{label}}</span>
 		<div id="colorPickerGroup">
-			<label for="p" class="{{pClass}}" id="lp" style="background-color:{{p}}">{{label}}</label>
+			<label for="p" class="{{pClass}}" id="lp" style="background-color:{{p}}"></label>
 			<input type="color" id="p" value="{{p}}">
-			<label for="s" class="{{sClass}}" id="ls" style="background-color:{{s}}">{{label}}</label>
+			<label for="s" class="{{sClass}}" id="ls" style="background-color:{{s}}"></label>
 			<input type="color" id="s" value="{{s}}">
 		</div>
 		<style>
 			:host{
 				display: inline-block;
-				position: relative;
 			}
 			:host(.shadow) label{
 				box-shadow:1px 1px 1px #666;
 			}
+			:host(.square.shadow) label{
+				box-shadow:1px 1px 0 #666;
+			}
 			:host(.square) label{
 				border-radius: 0;
+			}
+			:host(.square) #lp{
+				margin-top:-5px;
+			}
+			:host(.square) #ls{
+				margin-top: 5px;
+			}
+			:host(.horizontal) #label{
+				display: inline-block;
+			}
+			:host(.horizontal, .vertical) #label:after{
+				content: ":";
+				margin-left: 5px;
+			}
+			:host(.vertical) #label{
+				display: block;
+				clear: both;
 			}
 			:host>div{
 				width:35px;
 				height:22px;
 				position: relative;
+			}
+			#colorPickerGroup{
+				position: relative;
+				display: inline-block;
 			}
 			label{
 				position: absolute;
