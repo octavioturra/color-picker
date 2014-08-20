@@ -3,64 +3,99 @@
 <link rel="import" href="../bower_components/paper-canvas/dist/paper-canvas.html">
 
 <!-- Define your custom element -->
-<polymer-element name="color-picker" attributes="color showHex showRgb saturation dialog ">
+<polymer-element name="color-picker" attributes="label color primary secundary">
 
 	<template>
-		<paper-canvas width="200px" height="200px" id="canvas" background="rgba(0,0,0,0.1)"></paper-canvas>
-		<label for="black">Black:</label>
-		<input type="range" name="black" id="black" min="0" max="1" step="0.1" value="{{black}}">
+		<div id="colorPickerGroup">
+			<label for="p" class="{{pClass}}" id="lp" style="background-color:{{p}}">{{label}}</label>
+			<input type="color" id="p" value="{{p}}">
+			<label for="s" class="{{sClass}}" id="ls" style="background-color:{{s}}">{{label}}</label>
+			<input type="color" id="s" value="{{s}}">
+		</div>
 		<style>
 			:host{
-				background: red;
 				display: block;
-				height: 400px;
-				width: 400px;
 				position: relative;
+			}
+			:host(.shadow) label{
+				box-shadow:1px 1px 1px #666;
+			}
+			:host(.square) label{
+				border-radius: 0;
+			}
+			:host>div{
+				width:35px;
+				height:22px;
+				position: relative;
+			}
+			label{
+				position: absolute;
+				display: block;
+				width:20px;
+				height:20px;
+				border-radius: 100%;
+				border: 1px solid rgba(0,0,0,0.2);
+				float:left;
+				top:0;
+			}
+			#lp{
+				left:0;
+			}
+			#ls{
+				right:0;
+			}
+			.primary{
+				z-index:1;
+			}
+			.secundary{
+				z-index:0;
+			}
+			[type=color]{
+				visibility: hidden;
+				width:0;
+				height:0;
+				border: 0;
+				padding: 0;
 			}
 		</style>
 	</template>
+	<script src="../bower_components/color2color/dist/color2color.min.js"></script>
 	<script>
 		Polymer('color-picker', {
-			/* -- Attributes ------------------------------------------------ */
-			color: '#FFF',
-			showHex: true,
-			showRgb: false,
-			black: 0.5,
-			dialog: true,
-			paper: null,
-			/* -- Observables------------------------------------------------ */
-			observe: {
-				black: 'renderBlack'
+			p:'#000000',
+			s:'#FFFFFF',
+			primary : '',
+			secundary : '',
+			primaryColor : 'p',
+			secundaryColor : 's',
+			pClass:'primary',
+			cClass:'secundary',
+			observe:{
+				p: 'digest',
+				s: 'digest'
 			},
-			/* -- Lifecycle ------------------------------------------------- */
-			ready: function () {
-				var self = this;
-				this.paper = this.$.canvas.paper;
+			switchColor: function(){
+				var transitional = this.pClass;
 
-				this.$.canvas.addEventListener('redraw', function(){
-					var p = this.paper;
-					var from = new p.Point(100, 20);
-					var to = new p.Point(103, 100);
-					var path = new p.Path.Rectangle(from, to);
-					path.fillColor = 'red';
-					path.fillColor.hue = 0;
-					for (var x = 1; x < 360; x += 1) {
-						var c = path.clone()
-						path.fillColor.hue += 1;
-						c.rotate(x, new p.Point(102, 100));
-					}
-					var center = new this.paper.Point(102, 100);
-					self.blackCircle = new this.paper.Path.Circle(center, 80);
-					self.blackCircle.fillColor = 'black'
-					self.blackCircle.opacity = self.black;
+				this.pClass = this.sClass;
+				this.sClass = transitional;
 
-					this.draw();
-				});
+				transitional = this.primaryColor;
+
+				this.primaryColor = this.secundaryColor;
+				this.secundaryColor = transitional;
+
+				transitional = this.pClass;
+
+				this.pClass = this.sClass;
+				this.sClass = transitional;
 			},
-			/* -- Methods --------------------------------------------------- */
-			renderBlack: function(){
-				this.blackCircle.opacity = this.black;
-				this.$.canvas.draw();
+			digest:function(){
+				p = color2color(this.p, 'hex');
+				s = color2color(this.s, 'hex');
+
+				this.primary = this[this.primaryColor];
+				this.secundary = this[this.secundaryColor];
 			}
 		});
 	</script>
