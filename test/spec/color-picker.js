@@ -1,31 +1,51 @@
 'use strict';
 
-describe('Color2Color', function () {
-	it('should convert HEX to RGBA by default', function () {
-		expect(color2color('#dfe')).toBe('rgba(221,255,238,1)');
+describe('Color-picker', function () {
+	it('should start with black and white', function () {
+		expect(colorPicker.primary).toBe('#000000');
+		expect(colorPicker.secundary).toBe('#ffffff');
 	});
-	it('should convert HEX to RGB', function () {
-		expect(color2color('#036', 'rgb')).toBe('rgb(0,51,102)');
+	it('should set primary and secundary color', function(){
+		colorPicker.primary = 'red';
+		expect(colorPicker.primary).toBe('#ff0000');
+		colorPicker.primary = 'blue';
+		expect(colorPicker.primary).toBe('#0000ff');
 	});
-	it('should returns the same as the RGBA input', function () {
-		expect(color2color('rgba(64,64,64,0.5)')).toBe('rgba(64,64,64,0.5)');
+	it('should aways have internal color as HHEEXX', function(){
+		colorPicker.primary = '#000'
+		expect(colorPicker.p).toBe('#000000');
 	});
-	it('should convert HEX to RGBA, calculating opacity', function () {
-		expect(color2color('#dfe', 'rgba', true)).toBe('rgba(0,255,128,0.1333)');
+	it('should have the same primary internal and external color', function(){
+		expect(colorPicker.p).toBe(colorPicker.primary);
+		expect(colorPicker.s).toBe(colorPicker.secundary);
 	});
-	it('should convert HSLA to RGBA', function () {
-		expect(color2color('hsla(109,100%,37%,1)')).toBe('rgba(35,189,0,1)');
+	it('should switch color order', function(){
+		expect(colorPicker.order[0]).toBe('primary');
+		expect(colorPicker.order[1]).toBe('secundary');
+
+		colorPicker.switchColors();
+
+		expect(colorPicker.order[0]).toBe('secundary');
+		expect(colorPicker.order[1]).toBe('primary');
+
 	});
-	it('should convert RGBA to HSLA', function () {
-		expect(color2color('rgba(35,189,0,0.75)', 'hsl')).toBe('hsl(109,100%,37%)');
+	it('should switch external color', function(){
+		colorPicker.primary = 'red';
+		colorPicker.secundary = 'blue';
+
+		expect(colorPicker.p).toBe(colorPicker.primary);
+
+		colorPicker.switchColors();
+
+		expect(colorPicker.p).toBe(colorPicker.secundary);
 	});
-	it('should convert BLACK to #000', function () {
-		expect(color2color('black', 'hex')).toBe('#000000');
-	});
-	it('should convert WHITE to RGBA', function () {
-		expect(color2color('white')).toBe('rgba(255,255,255,1)');
-	});
-	it('should convert #HEX to #HHEEXX', function () {
-		expect(color2color('#000', 'hex')).toBe('#000000');
+	it('should switch internal color', function(){
+		colorPicker.primary = 'red';
+		colorPicker.secundary = 'blue';
+
+		colorPicker.switchColors();
+
+		expect(colorPicker.p).toBe('#0000ff');
+		expect(colorPicker.s).toBe('#ff0000');
 	});
 });

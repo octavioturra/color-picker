@@ -1,44 +1,61 @@
-var colorPicker = {
-	p: '#000000',
-	s: '#FFFFFF',
-	primary: '',
-	secundary: '',
-	primaryColor: 'p',
-	secundaryColor: 's',
-	pClass: 'primary',
-	cClass: 'secundary',
-	observe: {
-		primary: 'digest',
-		secundary: 'digest',
-		p: 'render',
-		s: 'render'
-	},
-	render: function () {
+var colorPicker = (function () {
+	var primaryColor = 'p',
+		secundaryColor = 's';
 
-	},
-	attached: function () {
-		this.digest();
-	},
-	switchColor: function () {
-		var transitional = this.pClass;
+	var o = {
+		p: '#000000',
+		s: '#ffffff',
 
-		this.pClass = this.sClass;
-		this.sClass = transitional;
+		order:['primary', 'secundary'],
+		render: function () {
 
-		transitional = this.primaryColor;
+		},
+		attached: function () {
+			this.digest();
+		},
+		switchColors: function () {
+			switchOrder();
 
-		this.primaryColor = this.secundaryColor;
-		this.secundaryColor = transitional;
+			transitional = primaryColor;
 
-		this.digest();
-	},
-	digest: function () {
-		this.primary = this[this.primaryColor];
-		this.secundary = this[this.secundaryColor];
+			primaryColor = secundaryColor;
+			secundaryColor = transitional;
 
-		p = color2color(this.primary, 'hex');
-		s = color2color(this.secundary, 'hex');
+			//this.digest();
+		},
+		digest: function () {
+			this.primary = this[primaryColor];
+			this.secundary = this[secundaryColor];
 
-		console.log(this.primary, this.secundary)
-	}
-};
+			p = color2color(this.primary, 'hex');
+			s = color2color(this.secundary, 'hex');
+		}
+	};
+
+	var switchOrder = function(){
+		var transitional = o.order[0];
+
+		o.order[0] = o.order[1];
+		o.order[1] = transitional;
+	};
+
+	Object.defineProperty(o, 'primary', {
+		get: function () {
+			return this[primaryColor];
+		},
+		set: function (value) {
+			this[primaryColor] = color2color(value, 'hex');
+		}
+	});
+
+	Object.defineProperty(o, 'secundary', {
+		get: function () {
+			return this[secundaryColor];
+		},
+		set: function (value) {
+			this[secundaryColor] = color2color(value, 'hex');
+		}
+	});
+
+	return o;
+})();

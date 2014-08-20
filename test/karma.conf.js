@@ -18,6 +18,7 @@ module.exports = function(config) {
 
     // list of files / patterns to load in the browser
     files: [
+			'bower_components/color2color/dist/color2color.min.js',
 			'src/color-picker.js',
 			'test/spec/color-picker.js'
 		],
