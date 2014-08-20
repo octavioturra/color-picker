@@ -14,7 +14,7 @@
 		</div>
 		<style>
 			:host{
-				display: block;
+				display: inline-block;
 				position: relative;
 			}
 			:host(.shadow) label{
@@ -37,6 +37,11 @@
 				border: 1px solid rgba(0,0,0,0.2);
 				float:left;
 				top:0;
+				transition: opacity 200ms linear;
+				cursor: pointer;
+			}
+			label:hover{
+				opacity: .7;
 			}
 			#lp{
 				left:0;
@@ -74,6 +79,9 @@
 				p: 'digest',
 				s: 'digest'
 			},
+			attached: function(){
+				this.digest();
+			},
 			switchColor: function(){
 				var transitional = this.pClass;
 
@@ -85,10 +93,7 @@
 				this.primaryColor = this.secundaryColor;
 				this.secundaryColor = transitional;
 
-				transitional = this.pClass;
-
-				this.pClass = this.sClass;
-				this.sClass = transitional;
+				this.digest();
 			},
 			digest:function(){
 				p = color2color(this.p, 'hex');
